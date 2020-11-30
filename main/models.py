@@ -4,17 +4,24 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class Category(models.Model):
     """Выбор объекта недвижимости"""
-    full = 'FL'
-    half = 'HF'
-    parcel = 'PL'
-    townhouse = 'TH'
+    full = 'Весь дом'
+    half = 'Часть дома'
+    parcel = 'Участок'
+    townhouse = 'Таунхаус'
     House_choice = [
         (full, 'Весь дом'),
         (half, 'Часть дома'),
         (parcel, 'Участок'),
         (townhouse, 'Таунхаус'),
     ]
-    house = models.CharField(max_length=2, default=full, choices=House_choice)
+    house = models.CharField(max_length=50, default=full, choices=House_choice)
+
+    def __str__(self):
+        return self.house
+
+    class Meta:
+        verbose_name = 'Категория(ю)'
+        verbose_name_plural = 'Категории'
 
 
 class User(models.Model):
@@ -26,41 +33,57 @@ class User(models.Model):
     password = models.CharField(max_length=50)
     dateRegistration = models.DateField(auto_now_add=True, auto_now=False, verbose_name='Дата регистрации')
 
+    def __str__(self):
+        return self.username
 
-class Objects(models.Model):
+    class Meta:
+        ordering = ['username']
+
+
+# ПЕРЕИМЕНУЙ
+class Object(models.Model):
     """Сам объект недвижимости"""
-    title = models.CharField(max_length=255)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    description = models.TextField()
+    title = models.CharField(max_length=255, verbose_name='Заголовок')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
+    description = models.TextField(verbose_name='Описание')
     slug = models.SlugField(verbose_name='URL', unique=True)
     views = models.IntegerField(default=0, verbose_name='Просмотры')
-    photos = models.ImageField(upload_to='photos/%Y/%m/%d/')
+    photos = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='Фотографии')
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name='Опубликовано')
-    author = models.ForeignKey(User)
-    square = models.PositiveIntegerField()
+    # author = models.ForeignKey(User)
+    square = models.PositiveIntegerField(verbose_name='Площадь')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Объект'
+        verbose_name_plural = 'Объекты'
+        ordering = ['title']
 
 
 '''
 Objects
 =======
-    Title(CharField)           +
-    Photos(ImageField)         +
-    Place(CharField(?))        -
-    Square(FloatField)         +
-    Description(TextField)     +
-    DateTimeAdd(DateTimeField) +
-    Category(ForeignKey)       +
-    Author()                   +
-    Views(IntegerField)        +
-    Slug(SlugField6yt)         +
+    Title(CharField)            +
+    Photos(ImageField)          +
+    Place(CharField(?))         -
+    Square(FloatField)          +
+    Description(TextField)      +
+    DateTimeAdd(DateTimeField)  +
+    Category(ForeignKey)        +
+    Author()                    +
+    Views(IntegerField)         +
+    Slug(SlugField6yt)          +
     
 User(админ, юзер, модератор, риэлтор)
 =======
-    Phone(PhoneField)          +
-    E-mail(EmailField)         +
-    Name(CharField)            +
-    Password(PasswordField)    +-
-    Username(CharField)        +
-    DateRegistration(DateField)+
+    Status(Choice)              -
+    Phone(PhoneField)           +
+    E-mail(EmailField)          +
+    Name(CharField)             +
+    Password(PasswordField)     +-
+    Username(CharField)         +
+    DateRegistration(DateField) +
     
 '''
