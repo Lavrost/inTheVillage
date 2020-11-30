@@ -1,0 +1,39 @@
+/*.nav_menu_item {
+    margin-right:285px;
+}
+*/
+
+div.home_image {
+  display: block;
+  margin-left: 50px;
+  margin-right: auto;
+  background-color: red;
+}
+
+a.text_logo:link {
+    text-decoration: none;
+    color: #282828;
+}
+a.text_logo:visited {
+    text-decoration: none;
+    color: #282828;
+}
+a.text_logo:active {
+    text-decoration: none;
+    color: #282828;
+}
+a.text_logo:hover {
+    text-decoration: none;
+    color: #282828;
+}
+
+.footer_text {
+    color: #282828;
+}
+
+.bg_footer {
+    background: #f0ffff;
+}
+body {
+    background-color: #cccccc;
+}
