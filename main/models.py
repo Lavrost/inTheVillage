@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -41,7 +42,7 @@ class User(models.Model):
 
 
 # ПЕРЕИМЕНУЙ
-class Object(models.Model):
+class RealtyObject(models.Model):
     """Сам объект недвижимости"""
     title = models.CharField(max_length=255, verbose_name='Заголовок')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
@@ -49,9 +50,11 @@ class Object(models.Model):
     slug = models.SlugField(verbose_name='URL', unique=True)
     views = models.IntegerField(default=0, verbose_name='Просмотры')
     photos = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='Фотографии')
-    created_at = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name='Опубликовано')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Опубликовано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Изменено')
     # author = models.ForeignKey(User)
-    square = models.PositiveIntegerField(verbose_name='Площадь')
+    square = models.FloatField(verbose_name='Площадь')
+    is_published = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
@@ -60,6 +63,9 @@ class Object(models.Model):
         verbose_name = 'Объект'
         verbose_name_plural = 'Объекты'
         ordering = ['title']
+
+    def get_url(self):
+        return reverse('realty', args=[self.slug])
 
 
 '''
