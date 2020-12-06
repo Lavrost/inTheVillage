@@ -13,3 +13,6 @@ def realty(request):
     return render(request, 'main/realty.html', {'realty_objects': realty_objects})
 
 
+def object_realty(request):
+    """ Отрисовка шаблона одного объекта недвижимости"""
+    pass

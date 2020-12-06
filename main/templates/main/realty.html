@@ -1,11 +1,28 @@
-{% load static %}
-
 {% extends 'main/base.html' %}
+
+{% load static %}
 
 {% block title %} Недвижимость {% endblock %}
 
-{% block content %}
-    {% for item in realty_objects %}
 
+{% block content %}
+<div class="container text-center">
+    Hello
+</div>
+    {% for item in realty_objects %}
+    <div class="col-9 mx-auto col-md-6 col-lg-3">
+        <div class="card mb-5">
+            <div class="p-3">
+                <a href="{% url 'home' %}">
+                    <img class="card-img-top" src="{{ item.photos.url }}" alt="{{item.title}}">
+                </a>
+            </div>
+            <div class="card-footer d-flex justify-content-between"
+                 style="background: transparent; border-color: transparent;">
+                <p class="font-weight-bold mb-0">{{item.title}}</p>
+                <h5 class="text-info font-italic mb-0">{{item.square}}</h5>
+            </div>
+        </div>
+    </div>
     {% endfor %}
 {% endblock %}
