@@ -1,7 +1,7 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.http import HttpResponse
-
-from .models import *
+from .models import RealtyObject
 
 
 def home(request):
@@ -14,5 +14,4 @@ def realty(request):
 
 
 def object_realty(request):
-    """ Отрисовка шаблона одного объекта недвижимости"""
-    pass
+    return render(request, 'main/object_realty.html')

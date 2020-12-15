@@ -41,20 +41,19 @@ class User(models.Model):
         ordering = ['username']
 
 
-# ПЕРЕИМЕНУЙ
 class RealtyObject(models.Model):
     """Сам объект недвижимости"""
-    title = models.CharField(max_length=255, verbose_name='Заголовок')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
-    description = models.TextField(verbose_name='Описание')
-    slug = models.SlugField(verbose_name='URL', unique=True)
-    views = models.IntegerField(default=0, verbose_name='Просмотры')
-    photos = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='Фотографии')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Опубликовано')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Изменено')
+    title = models.CharField(max_length=255, verbose_name='Заголовок', blank=False)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория', blank=False)
+    description = models.TextField(verbose_name='Описание', blank=False)
+    slug = models.SlugField(verbose_name='URL', unique=True, blank=False)
+    views = models.IntegerField(default=0, verbose_name='Просмотры', blank=False)
+    photos = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='Фотографии', blank=False)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Опубликовано', blank=False)
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Изменено', blank=False)
     # author = models.ForeignKey(User)
-    square = models.FloatField(verbose_name='Площадь')
-    is_published = models.BooleanField(default=True)
+    square = models.FloatField(verbose_name='Площадь', blank=False)
+    is_published = models.BooleanField(default=True, blank=False)
 
     def __str__(self):
         return self.title
